@@ -1,0 +1,16 @@
+{
+    "name": "BlenderProc Environment",
+    "build": {
+        "dockerfile": "../Dockerfile",
+        "context": ".."
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python"
+            ]
+        }
+    },
+    "remoteUser": "root",
+    "postCreateCommand": "blenderproc run --help || echo 'BlenderProc initialized'"
+}
