@@ -53,17 +53,24 @@ class TreeGenerator:
 
         while queue:
             current_state, depth = queue.popleft()
-            renderer.render(current_state)
-
             if depth >= max_depth:
                 continue
 
             for branch_idx in range(branches_per_node):
-                child_node_id = f"node_{node_counter:03d}"
-                obj_id = f"obj_{child_node_id.split('_')[1]}"
                 obj_type = object_types[(depth + branch_idx) % len(object_types)]
                 color = colors[(depth + branch_idx) % len(colors)]
                 position = [float(depth * 3 + branch_idx), 0.0, 0.0]
+
+                is_occupied = any(obj.position == position for obj in current_state.objects)
+                if is_occupied:
+                    continue 
+
+                existing_count = sum(
+                    1 for obj in current_state.objects 
+                    if obj.type == obj_type and obj.color == color
+                )
+                
+                obj_id = f"{obj_type}_{color}_{existing_count + 1}"
 
                 params = {
                     "id": obj_id,
@@ -73,6 +80,8 @@ class TreeGenerator:
                     "position": position,
                 }
 
+                child_node_id = f"node_{node_counter:03d}"
+                
                 transformed = TransformationEngine.add_object(current_state, params)
                 child_state = SceneState(
                     node_id=child_node_id,
@@ -107,23 +116,6 @@ class TreeGenerator:
                     )
                     queue.append((child_state, depth + 1))
                     node_counter += 1
-
-                graph.edges.append(
-                    Edge(
-                        from_node=current_state.node_id,
-                        to_node=child_node_id,
-                        transformation="add_object",
-                        params={
-                            "type": obj_type,
-                            "color": color,
-                            "size": 1.0,
-                            "position": position,
-                        },
-                    )
-                )
-
-                queue.append((child_state, depth + 1))
-                node_counter += 1
 
         graph_file = os.path.join(run_dir, "tree_graph.json")
         with open(graph_file, "w", encoding="utf-8") as f:

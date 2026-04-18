@@ -19,14 +19,14 @@ class SceneState:
     objects: List[SceneObject] = field(default_factory=list)
 
     def compute_hash(self) -> str:
-        """Computes a deterministic hash of the visual state, ignoring object creation order."""
+        """Computes a deterministic hash of the visual state."""
         if not self.objects:
             return hashlib.md5(b"empty_state").hexdigest()
             
-        # 1. Sort objects by position (X, Y, Z) to guarantee order independence
+        # 1. Sort objects by their visual properties
         sorted_objs = sorted(
             self.objects, 
-            key=lambda o: (o.position[0], o.position[1], o.position[2])
+            key=lambda o: (o.type, o.color, o.size, o.position[0], o.position[1], o.position[2])
         )
         
         # 2. Create a standardized string representation of the scene
@@ -34,9 +34,9 @@ class SceneState:
             f"{o.type}_{o.color}_{o.size}_{o.position[0]}_{o.position[1]}_{o.position[2]}" 
             for o in sorted_objs
         ]
-        state_string = "|".join(obj_strings)
         
         # 3. Hash it
+        state_string = "|".join(obj_strings)
         return hashlib.md5(state_string.encode('utf-8')).hexdigest()
 
 @dataclass
