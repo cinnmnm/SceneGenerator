@@ -47,7 +47,7 @@ class Edge:
     params: Dict[str, Any]
 
 @dataclass
-class TreeGraph:
+class SceneGraph:
     dataset_name: str
     root_node: str
     edges: List[Edge] = field(default_factory=list)
@@ -98,5 +98,5 @@ class TransformationEngine:
 def serialize_scene_state(state: SceneState) -> str:
     return json.dumps(state, default=lambda o: o.__dict__, indent=4)
 
-def serialize_tree_graph(graph: TreeGraph) -> str:
+def serialize_scene_graph(graph: SceneGraph) -> str:
     return json.dumps(graph, default=lambda o: o.__dict__, indent=4)

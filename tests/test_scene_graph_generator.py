@@ -4,13 +4,13 @@ import sys
 
 sys.path.insert(0, os.path.join(os.getcwd(), "src"))
 
-from tree_generator import TreeGenerator
+from scene_graph_generator import SceneGraphGenerator
 
 
-def test_tree_generator():
+def test_scene_generator():
     max_depth = 2
     branches_per_node = 2
-    generator = TreeGenerator(base_output_dir="test_output")
+    generator = SceneGraphGenerator(base_output_dir="test_output")
     run_dir = generator.generate(max_depth=max_depth, branches_per_node=branches_per_node, seed=42)
 
     if branches_per_node == 1:
@@ -38,4 +38,4 @@ def test_tree_generator():
 
 
 if __name__ == "__main__":
-    test_tree_generator()
+    test_scene_generator()

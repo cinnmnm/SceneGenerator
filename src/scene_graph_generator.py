@@ -4,11 +4,11 @@ from collections import deque
 from datetime import datetime
 from typing import Deque, Tuple
 
-from models import Edge, SceneState, TransformationEngine, TreeGraph
+from models import Edge, SceneState, TransformationEngine, SceneGraph
 from renderer_adapter import RendererAdapter
 
 
-class TreeGenerator:
+class SceneGraphGenerator:
     def __init__(self, base_output_dir: str = "test_output"):
         self.base_output_dir = base_output_dir
         os.makedirs(self.base_output_dir, exist_ok=True)
@@ -19,7 +19,7 @@ class TreeGenerator:
         os.makedirs(run_dir, exist_ok=False)
         return dataset_name, run_dir
 
-    def _graph_payload(self, graph: TreeGraph) -> dict:
+    def _graph_payload(self, graph: SceneGraph) -> dict:
         return {
             "dataset_name": graph.dataset_name,
             "root_node": graph.root_node,
@@ -39,7 +39,7 @@ class TreeGenerator:
         renderer = RendererAdapter(run_dir)
 
         root_state = SceneState(node_id="node_000", parent_id=None, seed=seed, objects=[])
-        graph = TreeGraph(dataset_name=dataset_name, root_node=root_state.node_id)
+        graph = SceneGraph(dataset_name=dataset_name, root_node=root_state.node_id)
 
         visited_states = {}
         visited_states[root_state.compute_hash()] = root_state.node_id
@@ -117,7 +117,7 @@ class TreeGenerator:
                     queue.append((child_state, depth + 1))
                     node_counter += 1
 
-        graph_file = os.path.join(run_dir, "tree_graph.json")
+        graph_file = os.path.join(run_dir, "scene_graph.json")
         with open(graph_file, "w", encoding="utf-8") as f:
             json.dump(self._graph_payload(graph), f, indent=4)
 
