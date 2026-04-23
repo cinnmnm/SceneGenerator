@@ -3,7 +3,7 @@ import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from models import SceneState
+from models import SceneRequest, SceneObject
 from renderer_adapter import RendererAdapter
 
 def test_renderer_adapter():
@@ -11,22 +11,23 @@ def test_renderer_adapter():
 
     renderer = RendererAdapter(output_dir)
 
-    test_state = SceneState(
-        node_id="node_000",
-        parent_id=None,
-        seed=155868,
+    test_request = SceneRequest(
+        scene_id="scene_000",
+        object_rotation_unit="degrees",
         objects=[
-            {
-                "id": "obj_1",
-                "type": "cube",
-                "color": "red",
-                "size": 1.0,
-                "position": [0, 0, 0]
-            }
+            SceneObject(
+                id="obj_1",
+                shape="cube",
+                color="red",
+                size=1.0,
+                material="Rubber",
+                position=[0.0, 0.0, 0.0],
+                rotation=[0.0, 0.0, 45.0]
+            )
         ]
     )
 
-    renderer.render(test_state)
+    renderer.render(test_request)
 
 if __name__ == "__main__":
     test_renderer_adapter()
