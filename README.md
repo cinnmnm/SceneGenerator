@@ -9,9 +9,6 @@ Ensure your environment includes `blenderproc` and `scipy`.
 If you don't want to install Blender and dependencies locally, you can use Docker.
 
 ```bash
-
-### 1. Build the image
-```bash
 docker build -t clevr-gen .
 ```
 
