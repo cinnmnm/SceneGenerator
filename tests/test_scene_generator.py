@@ -19,7 +19,7 @@ def test_scene_generator():
                 shape="cube",
                 color="red",
                 size=1.0,
-                material="Rubber",
+                material="Metal",
                 position=[-1.5, -1.0, 1.0],
                 rotation=[0.0, 0.0, 35.0]
             ),
@@ -40,6 +40,15 @@ def test_scene_generator():
                 material="Metal",
                 position=[0.0, 2.0, 1.0],
                 rotation=[0.0, 0.0, 90.0]
+            ),
+            SceneObject(
+                id="obj_04_small_cube",
+                shape="cube",
+                color="red",
+                size=0.5,
+                material="Rubber",
+                position=[2.0, -2.0, 0.5],
+                rotation=[0.0, 0.0, -30.0]
             )
         ]
     )

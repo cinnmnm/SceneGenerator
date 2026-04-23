@@ -18,6 +18,13 @@ class RendererAdapter:
         bpy.context.scene.cycles.transparent_min_bounces = 8
         bpy.context.scene.cycles.transparent_max_bounces = 8
 
+        bproc.renderer.set_light_bounces(  
+            diffuse_bounces=8,
+            glossy_bounces=1,  
+            max_bounces=12,  
+            ao_bounces_render=3  
+        )
+
     def render(self, scene_request: SceneRequest):
         bproc.clean_up(clean_up_camera=True)
 
@@ -27,8 +34,8 @@ class RendererAdapter:
             nodes.clear() 
             
             bg_node = nodes.new(type="ShaderNodeBackground")
-            bg_node.inputs[0].default_value = (0.8, 0.8, 0.8, 1.0)
-            bg_node.inputs[1].default_value = 0.2 # Emission
+            bg_node.inputs[0].default_value = (0.1, 0.1, 0.1, 1.0)
+            bg_node.inputs[1].default_value = 0.6 # Emission
             
             out_node = nodes.new(type="ShaderNodeOutputWorld")
             world.node_tree.links.new(bg_node.outputs[0], out_node.inputs[0])
@@ -38,7 +45,7 @@ class RendererAdapter:
         ground.set_location([0.0, 0.0, 0.0])
         
         ground_mat = bproc.material.create("ground_material")
-        ground_mat.set_principled_shader_value("Base Color", [0.8, 0.8, 0.8, 1.0])
+        ground_mat.set_principled_shader_value("Base Color", [0.6, 0.6, 0.6, 1.0])
         ground_mat.set_principled_shader_value("Metallic", 0.0)
         ground_mat.set_principled_shader_value("Roughness", 1.0)
         ground.replace_materials(ground_mat)
