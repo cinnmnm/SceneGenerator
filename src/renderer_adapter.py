@@ -131,11 +131,12 @@ class RendererAdapter:
                 continue
 
             b_obj.set_scale([scale, scale, scale])
-            z_pos = scale * 1.0
             
             x_pos = obj.position[0] if len(obj.position) > 0 else 0.0
             y_pos = obj.position[1] if len(obj.position) > 1 else 0.0
-            b_obj.set_location([x_pos, y_pos, z_pos])
+            z_pos = obj.position[2] if len(obj.position) > 2 else 0.0
+            b_obj.move_origin_to_bottom_mean_point()
+            b_obj.set_location([x_pos, y_pos, obj.position[2]])
 
             if obj.rotation and len(obj.rotation) == 3:
                 rot = [float(v) for v in obj.rotation]

@@ -20,7 +20,7 @@ def test_scene_generator():
                 color="red",
                 size=1.0,
                 material="Metal",
-                position=[-1.5, -1.0, 1.0],
+                position=[-1.5, -1.0, 0.0],
                 rotation=[0.0, 0.0, 35.0]
             ),
             SceneObject(
@@ -29,7 +29,7 @@ def test_scene_generator():
                 color="cyan",
                 size=0.5,
                 material="Metal",
-                position=[1.2, 0.5, 0.5],
+                position=[1.2, 0.5, 0.0],
                 rotation=[0.0, 0.0, 0.0]
             ),
             SceneObject(
@@ -38,7 +38,7 @@ def test_scene_generator():
                 color="purple",
                 size=1.0,
                 material="Metal",
-                position=[0.0, 2.0, 1.0],
+                position=[0.0, 2.0, 0.0],
                 rotation=[0.0, 0.0, 90.0]
             ),
             SceneObject(
@@ -47,7 +47,7 @@ def test_scene_generator():
                 color="red",
                 size=0.5,
                 material="Rubber",
-                position=[2.0, -2.0, 0.5],
+                position=[2.0, -2.0, 0.0],
                 rotation=[0.0, 0.0, -30.0]
             )
         ]
